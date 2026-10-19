@@ -3,16 +3,6 @@ import torchvision
 import torchvision.transforms as transforms
 from torch.utils.data import DataLoader
 
-# Psuedocode 
-#1. Train the model on data set specific for training and have it adjust the initial weights and biases in its kernels 
-    #This set would be a batch of digits and their correct labels
-#2. Combine these kernel outputs (from sliding across the images) to create feature maps.
-#3. Use these feature maps to observe a new training data set and then make predictions among the 10 digits.
-#4. Compare the prediction (along with the two guesses) with the correct labels using a cross-entropy loss function
-#5. Use backpropagation to observe how certain kernel weights affect the loss and update those parameters to reduce the loss corresponding to the incorrect guesses
-#6. Test on the testing dataset
-#7. at some point along the desingn process i dcdied to split the model into classes in order to comapre the acruacy of different optimizers (ie SGD, Adam etc)
-
 #### Gathering the data 
 
 training_dataset = torchvision.datasets.MNIST(root='./ML_Project_(Handwriting)', train = True, transform = transforms.ToTensor(), download = True )
@@ -26,7 +16,7 @@ print ("Size of testing dataset:", len(testing_dataset))
 trainingBatches = DataLoader(training_dataset, batch_size = 32, shuffle = True)
 testBatches = DataLoader(testing_dataset, batch_size = 32, shuffle = True)
 
-### ML Model Function
+### Model Function
 class digitRecogition(torch.nn.Module):
     def __init__(self):
         super().__init__()
@@ -90,26 +80,5 @@ print(f"{PercentAccurate:.1%}")
 
 
 
-# Investigation
-
-#incorrect = Prediction != labels
-#print(incorrect)
-
-
-#wrongImages = images[incorrect]
-#wrongPredictions = Prediction[incorrect]
-#wrongLabels = labels[incorrect]
-
-
-
-#print(Prediction)
-#print(labels)
-
-#import matplotlib.pyplot as plt
-
-#plt.imshow(wrongImages[0,0], cmap = "gray")
-#plt.title(f"Actual: {wrongLabels[0].item()}, Predicted: {wrongPredictions[0].item()}")
-#plt.axis("off")
-#plt.show()
 
 
